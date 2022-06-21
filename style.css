@@ -1,0 +1,69 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Kdam+Thmor+Pro&display=swap');
+
+:root {
+    --primary: #46ceec;
+    --primary-light: #e0f7fd;
+    --secondary: #3eff53;
+}
+
+body {
+    font-family: 'Caveat', sans-serif;
+    margin: 0;
+    background-color: var(--primary-light);
+}
+
+#navbar {
+    background-color: var(--primary);
+    text-align: center;
+    padding: 10px 0 10px 0;
+}
+
+h1 {
+    font-size: 52px;
+    margin: 0;
+}
+
+#content-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 30%);
+}
+
+#new-book{
+    position: fixed;
+    box-sizing: border-box;
+    bottom: 40px;
+    left: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--secondary);
+    width: 90px;
+    height: 50px;
+    cursor: pointer;
+    user-select: none;
+
+    border-width: 0;
+    border-radius: 30px;
+    -webkit-border-radius: 30px;
+    -moz-border-radius: 30px;
+    -ms-border-radius: 30px;
+    -o-border-radius: 30px;
+}
+
+#new-book:hover {
+    box-shadow: 0px 2px 2px 2px rgba(0, 0, 0, 25%);
+    transform: translate(0px, -2px);
+    -webkit-transform: translate(0px, -2px);
+    -moz-transform: translate(0px, -2px);
+    -ms-transform: translate(0px, -2px);
+    -o-transform: translate(0px, -2px);
+}
+
+#new-book:active {
+    box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 40%);
+    transform: translate(0px, 1px);
+    -webkit-transform: translate(0px, 1px);
+    -moz-transform: translate(0px, 1px);
+    -ms-transform: translate(0px, 1px);
+    -o-transform: translate(0px, 1px);
+}
