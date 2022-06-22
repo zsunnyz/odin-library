@@ -3,7 +3,7 @@
 :root {
     --primary: #46ceec;
     --primary-light: #e0f7fd;
-    --secondary: #3eff53;
+    --secondary: #00e29c;
 }
 
 body {
@@ -46,13 +46,34 @@ h1 {
     background-color: white;
     height: 400px;
     text-align: center;
-    
+
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    transition-duration: 0.3s;
+    -webkit-transition-duration: 0.3s;
+    transition-property: box-shadow, transform;
+
     padding: 10px;
     border-radius: 20px;
     -webkit-border-radius: 20px;
     -moz-border-radius: 20px;
     -ms-border-radius: 20px;
     -o-border-radius: 20px;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    -moz-transform: scale(1.05);
+    -ms-transform: scale(1.05);
+    -o-transform: scale(1.05);
+    -webkit-transform: scale(1.05);
+}
+
+.card:hover.read{
+    box-shadow: 0 10px 10px -10px var(--primary); 
+}
+
+.card:hover.unfinished{
+    box-shadow: 0 12px 15px -12px var(--secondary); 
 }
 
 .card > h2:after {
@@ -72,14 +93,15 @@ h1 {
 }
 
 .read {
-    border: 2px solid var(--primary);
-    box-shadow: 0 0 3px 1px var(--primary);
+    border: 0px solid var(--primary);
+    box-shadow: 0 4px 5px -3px var(--primary);
 }
 
 .unfinished {
-    border: 2px solid var(--secondary);
-    box-shadow: 0 0 3px 1px var(--secondary);
+    border: 0px solid var(--secondary);
+    box-shadow: 0 4px 5px -3px var(--secondary);
 }
+
 
 /*********** Baseline, reset styles ***********/
 input[type="range"] {
