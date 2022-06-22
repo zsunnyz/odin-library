@@ -1,10 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Kdam+Thmor+Pro&display=swap');
 
+/* || VARIABLES */
+
 :root {
     --primary: #46ceec;
     --primary-light: #e0f7fd;
+    --primary-dark: 0, 94, 107;
     --secondary: #00e29c;
 }
+
+/* || GENERAL STYLES */
 
 body {
     font-family: 'Caveat', sans-serif;
@@ -17,6 +22,8 @@ body {
     justify-content: center;
 }
 
+/* || NAV BAR  */
+
 #navbar {
     background-color: var(--primary);
     text-align: center;
@@ -28,6 +35,8 @@ h1 {
     font-size: 52px;
     margin: 0;
 }
+
+/* || CARDS*/
 
 #content-container {
     display: grid;
@@ -102,7 +111,7 @@ h1 {
     box-shadow: 0 4px 5px -3px var(--secondary);
 }
 
-
+/* || RANGE INPUT */
 /*********** Baseline, reset styles ***********/
 input[type="range"] {
   -webkit-appearance: none;
@@ -123,6 +132,10 @@ input[type="range"]::-webkit-slider-runnable-track {
   background-color: #e0f7fd;
   border-radius: 0.5rem;
   height: 0.5rem;
+  -webkit-border-radius: 0.5rem;
+  -moz-border-radius: 0.5rem;
+  -ms-border-radius: 0.5rem;
+  -o-border-radius: 0.5rem;
 }
 
 /* slider thumb */
@@ -134,6 +147,10 @@ input[type="range"]::-webkit-slider-thumb {
   border-radius: 0.5rem;
   height: 0.5rem;
   width: 1rem;
+  -webkit-border-radius: 0.5rem;
+  -moz-border-radius: 0.5rem;
+  -ms-border-radius: 0.5rem;
+  -o-border-radius: 0.5rem;
 }
 
 /*********** Firefox styles ***********/
@@ -177,11 +194,47 @@ input[type="range"]::-moz-range-thumb {
     -o-border-radius: 5px;
 }
 
+/* || MODAL */
+.modal {
+    display: flex;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: auto;
+    
+    align-items: center;
+    justify-content: center;
+
+    background-color: rgb(var(--primary-dark));
+    background-color: rgb(var(--primary-dark), 0.8);
+}
+
+.modal-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    height: 700px;
+    width: min(90vw, 550px);
+    text-align: center;
+    
+    border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
+}
+
+/* || ADD BUTTON */
 #new-book{
+    z-index: 1;
     position: fixed;
     box-sizing: border-box;
     bottom: 40px;
-    left: 50%;
+
     display: flex;
     align-items: center;
     justify-content: center;
@@ -190,7 +243,6 @@ input[type="range"]::-moz-range-thumb {
     height: 50px;
     cursor: pointer;
     user-select: none;
-
     border-width: 0;
     border-radius: 30px;
     -webkit-border-radius: 30px;
