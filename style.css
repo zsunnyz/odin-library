@@ -25,10 +25,18 @@ body {
 /* || NAV BAR  */
 
 #navbar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background-color: var(--primary);
     text-align: center;
     width: 100%;
     padding: 10px 0 10px 0;
+}
+
+svg#book {
+    height: 50px;
+    width: auto;
 }
 
 h1 {
@@ -228,6 +236,10 @@ input[type="range"]::-moz-range-thumb {
     -o-border-radius: 20px;
 }
 
+#noshow {
+    display: none;
+}
+
 /* || ADD BUTTON */
 #new-book{
     z-index: 1;
@@ -249,6 +261,11 @@ input[type="range"]::-moz-range-thumb {
     -moz-border-radius: 30px;
     -ms-border-radius: 30px;
     -o-border-radius: 30px;
+}
+
+svg#plus{
+    height: 50%;
+    width: auto;
 }
 
 button:hover {
