@@ -10,11 +10,17 @@ body {
     font-family: 'Caveat', sans-serif;
     margin: 0;
     background-color: var(--primary-light);
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 #navbar {
     background-color: var(--primary);
     text-align: center;
+    width: 100%;
     padding: 10px 0 10px 0;
 }
 
@@ -25,7 +31,128 @@ h1 {
 
 #content-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, 30%);
+    box-sizing: border-box;
+    padding: 40px max(40px, 10%) 10px max(40px, 10%);
+    width: 100%;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 40px;
+}
+
+.card {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    height: 400px;
+    text-align: center;
+    
+    padding: 10px;
+    border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
+}
+
+.card > h2:after {
+    content:' ';
+    display:block;
+    border:1px solid var(--primary);
+}
+
+.card > p {
+    font-size: large;
+    font-weight: 500;
+    margin: 10px;
+}
+
+.pages-read {
+    display: inline-block;
+}
+
+.read {
+    border: 2px solid var(--primary);
+    box-shadow: 0 0 3px 1px var(--primary);
+}
+
+.unfinished {
+    border: 2px solid var(--secondary);
+    box-shadow: 0 0 3px 1px var(--secondary);
+}
+
+/*********** Baseline, reset styles ***********/
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+  width: 75%;
+}
+
+/* Removes default focus */
+input[type="range"]:focus {
+  outline: none;
+}
+
+/******** Chrome, Safari, Opera and Edge Chromium styles ********/
+/* slider track */
+input[type="range"]::-webkit-slider-runnable-track {
+  background-color: #e0f7fd;
+  border-radius: 0.5rem;
+  height: 0.5rem;
+}
+
+/* slider thumb */
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Override default look */
+  appearance: none;
+  margin-top: 0px; /* Centers thumb on the track */
+  background-color: #46ceec;
+  border-radius: 0.5rem;
+  height: 0.5rem;
+  width: 1rem;
+}
+
+/*********** Firefox styles ***********/
+/* slider track */
+input[type="range"]::-moz-range-track {
+  background-color: #e0f7fd;
+  border-radius: 0.5rem;
+  height: 0.5rem;
+}
+
+/* slider thumb */
+input[type="range"]::-moz-range-thumb {
+  background-color: #46ceec;
+  border: none; /*Removes extra border that FF applies*/
+  border-radius: 0.5rem;
+  height: 0.5rem;
+  width: 1rem;
+}
+
+.card-buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0 10px 0;
+    width: 75%;
+    
+    gap: 10px;
+}
+
+.card-buttons > button {
+    width: 100%;
+    font-family: inherit;
+    font-size: larger;
+    border-width: 0;
+    background-color: var(--primary-light);
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
 }
 
 #new-book{
@@ -50,20 +177,18 @@ h1 {
     -o-border-radius: 30px;
 }
 
-#new-book:hover {
-    box-shadow: 0px 2px 2px 2px rgba(0, 0, 0, 25%);
-    transform: translate(0px, -2px);
-    -webkit-transform: translate(0px, -2px);
-    -moz-transform: translate(0px, -2px);
-    -ms-transform: translate(0px, -2px);
-    -o-transform: translate(0px, -2px);
+button:hover {
+    transform: translate(0px, -1px);
+    -webkit-transform: translate(0px, -1px);
+    -moz-transform: translate(0px, -1px);
+    -ms-transform: translate(0px, -1px);
+    -o-transform: translate(0px, -1px);
 }
 
-#new-book:active {
-    box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 40%);
-    transform: translate(0px, 1px);
-    -webkit-transform: translate(0px, 1px);
-    -moz-transform: translate(0px, 1px);
-    -ms-transform: translate(0px, 1px);
-    -o-transform: translate(0px, 1px);
+button:active {
+    transform: translate(0px, 0.5px);
+    -webkit-transform: translate(0px, 0.5px);
+    -moz-transform: translate(0px, 0.5px);
+    -ms-transform: translate(0px, 0.5px);
+    -o-transform: translate(0px, 0.5px);
 }
