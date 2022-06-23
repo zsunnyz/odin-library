@@ -1,0 +1,1 @@
+addBtn = document.getElementById("newBook");

@@ -347,3 +347,24 @@ button:active {
     -ms-transform: translate(0px, 0.5px);
     -o-transform: translate(0px, 0.5px);
 }
+
+#plus {
+    transition: transform 0.1s;
+    transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    -webkit-transition: transform 0.1s;
+    -moz-transition: transform 0.1s;
+    -ms-transition: transform 0.1s;
+    -o-transition: transform 0.1s;
+}
+
+.plus-close{
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+}
