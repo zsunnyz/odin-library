@@ -54,22 +54,10 @@
         </div>
     </div>
     <div class ="modal noshow"> 
-        <div id="modal-add" class="modal-content">
+        <div class="modal-content">
             <h2>Add New Book</h2>
-            <input type="text" placeholder="Title" name="title" id="title">
-            <input type="text" placeholder="Author" name="author" id="author">
-            <input type="number" placeholder="Total Number of Pages" name="total-pages" id="total-pages">
-            <input type="number" placeholder="Pages Read" name="pages-read" id="pages-read">
-            <div>
-                <label for="completed">Finished Reading?</label>
-                <input type="checkbox" name="completed" id="completed">
-            </div>
-            <button type="submit" id="modal-submit">Submit</button>
-        </div>
-        <div id="modal-edit" class="modal-content">
-            <h2>Edit Book</h2>
-            <input type="text" placeholder="Title" name="title" id="title">
-            <input type="text" placeholder="Author" name="author" id="author">
+            <input type="text" placeholder="Title" name="title" id="title" minlength="1">
+            <input type="text" placeholder="Author" name="author" id="author" minlength="1">
             <input type="number" placeholder="Total Number of Pages" name="total-pages" id="total-pages">
             <input type="number" placeholder="Pages Read" name="pages-read" id="pages-read">
             <div>
