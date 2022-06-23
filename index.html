@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="./library.js" defer></script>
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="./icons/book.svg">
     <title>Odin-Lib</title>
 </head>
 <body>
@@ -39,7 +40,7 @@
             <h2>Welcome to your personal library!</h2>
             <h3>Press the plus button at the bottom of your screen to get started</h3>
         </div>
-        <div class="card unfinished">
+        <div class="card read">
             <h2 class="title">Harry Potter and the Order of the Phoenix</h2>
             <p>Author: <span class="author">J.K. Rowling</span></p>
             <p>No. Pages: <span class="total-pages">799</span></p>
@@ -51,15 +52,32 @@
                 <button type="button">delete</button>
             </div>
         </div>
-        <div class="card"></div>
-        <div class="card"></div>
-        <div class="card"></div>
-        <div class="card"></div>
-        <div class="card"></div>
-        <div class="card"></div>
     </div>
-    <div class ="modal" id="noshow">
-        <div class="modal-content"></div>
+    <div class ="modal noshow"> 
+        <div class="modal-content">
+            <h2>Add New Book</h2>
+            <input type="text" placeholder="Title" name="title" id="title">
+            <input type="text" placeholder="Author" name="author" id="author">
+            <input type="number" placeholder="Total Number of Pages" name="total-pages" id="total-pages">
+            <input type="number" placeholder="Pages Read" name="pages-read" id="pages-read">
+            <div>
+                <label for="completed">Finished Reading?</label>
+                <input type="checkbox" name="completed" id="completed">
+            </div>
+            <button type="submit" id="modal-submit">Submit</button>
+        </div>
+        <div class="modal-content">
+            <h2>Edit Book</h2>
+            <input type="text" placeholder="Title" name="title" id="title">
+            <input type="text" placeholder="Author" name="author" id="author">
+            <input type="number" placeholder="Total Number of Pages" name="total-pages" id="total-pages">
+            <input type="number" placeholder="Pages Read" name="pages-read" id="pages-read">
+            <div>
+                <label for="completed">Finished Reading?</label>
+                <input type="checkbox" name="completed" id="completed">
+            </div>
+            <button type="submit" id="modal-submit">Submit</button>
+        </div>
     </div>
     <button type="button" id="new-book">
         <svg version="1.1" id="plus" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="122.875px" height="122.648px" viewBox="0 0 122.875 122.648" enable-background="new 0 0 122.875 122.648" xml:space="preserve">
