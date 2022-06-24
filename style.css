@@ -236,8 +236,8 @@ input[type="range"]::-moz-range-thumb {
     gap: 20px;
 
     background-color: white;
-    height: auto;
-    width: min(90vw, 550px);
+    height: fit-content;
+    width: min(90vw, 600px);
     text-align: center;
 
     border-radius: 20px;
@@ -248,7 +248,7 @@ input[type="range"]::-moz-range-thumb {
 }
 
 .modal-content > * {
-    width: min(100%, 300px);
+    width: min(100%, 350px);
     height: 30px;
 }
 
@@ -280,15 +280,40 @@ input[type="range"]::-moz-range-thumb {
     outline: 2px solid var(--secondary-light);
 }
 
+.modal-content > input:valid{
+    outline: 2px solid var(--secondary);
+}
+
+.modal-content > input:not(.unfilled):invalid{
+    outline: 2px solid red;
+}
+
+.invalid {
+    outline: 2px solid red;
+}
+
 .modal-content div {
     display: flex;
     justify-content: space-between;
 }
 
+/* modal errors */
+#error-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.error {
+    font-size: 20px;
+    margin: 0;
+    text-align: left;
+    color: red;
+}
+
 .modal-content button {
     font-family: inherit;
     font-size: 24px;
-    background-color: var(--secondary);
     
     margin-top: 100px;
     margin-bottom: 50px;
@@ -298,6 +323,14 @@ input[type="range"]::-moz-range-thumb {
     -moz-border-radius: 10px;
     -ms-border-radius: 10px;
     -o-border-radius: 10px;
+}
+
+.form-complete {
+    background-color: var(--secondary);
+}
+
+.inactive {
+    background-color: grey;
 }
 
 .noshow {
@@ -332,7 +365,7 @@ svg#plus{
     width: auto;
 }
 
-button:hover {
+button:not(.inactive):hover {
     transform: translate(0px, -1px);
     -webkit-transform: translate(0px, -1px);
     -moz-transform: translate(0px, -1px);
@@ -340,7 +373,7 @@ button:hover {
     -o-transform: translate(0px, -1px);
 }
 
-button:active {
+button:not(.inactive):active {
     transform: translate(0px, 0.5px);
     -webkit-transform: translate(0px, 0.5px);
     -moz-transform: translate(0px, 0.5px);

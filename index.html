@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -56,15 +55,23 @@
     <div class ="modal noshow"> 
         <div class="modal-content">
             <h2>Add New Book</h2>
-            <input type="text" placeholder="Title" name="title" id="title" minlength="1">
-            <input type="text" placeholder="Author" name="author" id="author" minlength="1">
-            <input type="number" placeholder="Total Number of Pages" name="total-pages" id="total-pages">
-            <input type="number" placeholder="Pages Read" name="pages-read" id="pages-read">
+            <input type="text" placeholder="Title" name="title" id="title" class="unfilled" value="" minlength="1" required>
+            <input type="text" placeholder="Author" name="author" id="author" class="unfilled" value="" minlength="1" required>
+            <input type="number" placeholder="Total Number of Pages" name="total-pages" id="total-pages" class="unfilled" value="" min="1" required>
+            <input type="number" placeholder="Pages Read" name="pages-read" id="pages-read" class="unfilled" value="" min="1" required>
             <div>
                 <label for="completed">Finished Reading?</label>
                 <input type="checkbox" name="completed" id="completed">
             </div>
-            <button type="submit" id="modal-submit">Submit</button>
+            <div id="error-container">
+                <p class="error noshow" id="title-e">Need to include a title</p>
+                <p class="error noshow" id="author-e">Need to include an author</p>
+                <p class="error noshow" id="page-total-small-e">Pages must be greater than 0</p>
+                <p class="error noshow" id="page-total-alpha-e">Pages must be numeric</p>
+                <p class="error noshow" id="page-total-e">Pages must be greater than 0</p>
+                <p class="error noshow" id="pages-read-e">Pages read must be smaller or equal to total number of pages</p>
+            </div>
+            <button type="submit" id="modal-submit" class="form-complete inactive">Submit</button>
         </div>
     </div>
     <button type="button" id="new-book">
