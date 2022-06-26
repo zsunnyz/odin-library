@@ -25,10 +25,19 @@ const modal = document.querySelector(".modal");
 const modalContent = document.querySelector(".modal-content");
 
 // input validation
-allInputsValid = {} // object containing all the input id as keys and if they are valid or not
+const titleInput = document.getElementById("title");
+const authorInput = document.getElementById("author");
+const totalPagesInput = document.getElementById("total-pages");
+const pagesReadInput = document.getElementById("pages-read");
+const modalInputs = document.querySelectorAll(".modal-content > input");
 
-function areInputsValid() {
-    Object.values(allInputsValid).forEach(value => {
+let allInputsValid = {} // object containing all the input id as keys and if they are valid or not
+modalInputs.forEach(modalInput => {
+    allInputsValid[modalInput.id] = false;
+});
+
+function areInputsValid(inputObject) {
+    inputObject.values(allInputsValid).forEach(value => {
         if(!value){
             return false;
         }
@@ -36,49 +45,69 @@ function areInputsValid() {
     return true;
 }
 
-const modalInputs = document.querySelectorAll(".modal-content > input");
-modalInputs.forEach(modalInput => {
-    allInputsValid[modalInput.id] = false;
-});
-
 /* input event listener events */
+
 // change the value of pages read based on total-pages if book is finished
 ["keyup", "keydown"].forEach(e => {
-    document.getElementById("total-pages").addEventListener(e , () => {
-        if (document.getElementById("pages-read").readOnly) {
-            document.getElementById("pages-read").value = document.getElementById("total-pages").value;
+    totalPagesInput.addEventListener(e , () => {
+        if (pagesReadInput.readOnly) {
+            pagesReadInput.value = totalPagesInput.value;
         }
 
         pageTotalSmall = document.getElementById("page-total-small-e");
         pageTotalAlpha = document.getElementById("page-total-alpha-e");
 
-        if (!isNumber(document.getElementById("total-pages").value) && document.getElementById("total-pages").value != ""){
+        if (!isNumber(totalPagesInput.value) && totalPagesInput.value != ""){
             console.log("here");
             pageTotalSmall.classList.add("noshow");
             pageTotalAlpha.classList.remove("noshow");
+            allInputsValid["total-pages"] = false;
         }
-        else if (document.getElementById("total-pages").value <= '0') {
+        else if (totalPagesInput.value <= '0') {
             pageTotalAlpha.classList.add("noshow");
             pageTotalSmall.classList.remove("noshow");
+            allInputsValid["total-pages"] = false;
         }
         else {
             pageTotalAlpha.classList.add("noshow");
             pageTotalSmall.classList.add("noshow");
             allInputsValid["total-pages"] = true;
         }
+        checkPagesReadValid()
     })
 });
+
+// check pages-read validity
+["keyup", "keydown"].forEach (e => {
+    pagesReadInput.addEventListener(e, () => {
+        checkPagesReadValid()
+    })
+})
+
+function checkPagesReadValid(){
+    if (pagesReadInput.value > totalPagesInput.value) {
+        pagesReadInput.setCustomValidity("Pages read must be smaller or equal to total number of pages");
+        document.getElementById("pages-read-e").classList.remove("noshow");
+        allInputsValid["pages-read"] = false;
+    }
+    else {
+        pagesReadInput.setCustomValidity("");
+        document.getElementById("pages-read-e").classList.add("noshow");
+        allInputsValid["pages-read"] = true;
+    }
+
+}
 
 // event listener for the book finished button in the modal event
 let currInputPage = 0;
 const modalCompleted = document.getElementById("completed");
 modalCompleted.addEventListener("click", () => {
     if (modalCompleted.checked) {
-        pagesReadInput = document.getElementById("pages-read");
 
         currInputPage = pagesReadInput.value;
-        pagesReadInput.value = document.getElementById("total-pages").value;
+        pagesReadInput.value = totalPagesInput.value;
         pagesReadInput.readOnly = true;
+        allInputsValid["pages-read"] = true;
     }
     else {
         pagesReadInput.readOnly = false;
