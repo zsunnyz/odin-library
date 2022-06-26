@@ -36,16 +36,45 @@ modalInputs.forEach(modalInput => {
     allInputsValid[modalInput.id] = false;
 });
 
-function areInputsValid(inputObject) {
-    inputObject.values(allInputsValid).forEach(value => {
+function areInputsValid() {
+    isValid = true;
+    Object.values(allInputsValid).forEach(value => {
         if(!value){
-            return false;
+            isValid = false;
         }
     })
-    return true;
-}
+    return isValid;
+};
 
+function changeOnInputsValid() {
+    console.log(areInputsValid());
+    if (areInputsValid()){
+        modalSubmit.classList.remove("inactive");
+    }
+    else {
+        modalSubmit.classList.add("inactive");
+    }
+}
 /* input event listener events */
+
+titleInput.addEventListener("keydown", () => {
+    if (titleInput.value.length >= 1){
+        allInputsValid["title"] = true;
+    }
+    else {
+        allInputsValid["title"] = false;
+    }
+    changeOnInputsValid();
+});
+authorInput.addEventListener("keydown", () => {
+    if (authorInput.value.length >= 1){
+        allInputsValid["author"] = true;
+    }
+    else {
+        allInputsValid["author"] = false;
+    }
+    changeOnInputsValid();
+});
 
 // change the value of pages read based on total-pages if book is finished
 ["keyup", "keydown"].forEach(e => {
@@ -53,10 +82,10 @@ function areInputsValid(inputObject) {
         if (pagesReadInput.readOnly) {
             pagesReadInput.value = totalPagesInput.value;
         }
-
+        
         pageTotalSmall = document.getElementById("page-total-small-e");
         pageTotalAlpha = document.getElementById("page-total-alpha-e");
-
+        
         if (!isNumber(totalPagesInput.value) && totalPagesInput.value != ""){
             console.log("here");
             pageTotalSmall.classList.add("noshow");
@@ -85,7 +114,7 @@ function areInputsValid(inputObject) {
 })
 
 function checkPagesReadValid(){
-    if (pagesReadInput.value > totalPagesInput.value) {
+    if (parseInt(pagesReadInput.value) > parseInt(totalPagesInput.value)) {
         pagesReadInput.setCustomValidity("Pages read must be smaller or equal to total number of pages");
         document.getElementById("pages-read-e").classList.remove("noshow");
         allInputsValid["pages-read"] = false;
@@ -95,7 +124,7 @@ function checkPagesReadValid(){
         document.getElementById("pages-read-e").classList.add("noshow");
         allInputsValid["pages-read"] = true;
     }
-
+    changeOnInputsValid();
 }
 
 // event listener for the book finished button in the modal event
