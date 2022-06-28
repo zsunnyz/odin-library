@@ -202,12 +202,19 @@ input[type="range"]::-moz-range-thumb {
     font-family: inherit;
     font-size: larger;
     border-width: 0;
-    background-color: var(--primary-light);
     border-radius: 5px;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     -ms-border-radius: 5px;
     -o-border-radius: 5px;
+}
+
+.card-buttons > button:not(.button-incomplete) {
+    background-color: var(--primary-light);
+}
+
+.button-incomplete {
+    background-color: var(--secondary-light);
 }
 
 /* || MODAL */

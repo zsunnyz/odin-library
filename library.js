@@ -24,15 +24,84 @@ let isNumber = num => {return /^\d+$/.test(num);}
 let currLibrary = [];
 
 function Book(id, title, author, pages, pagesRead, read) {
-    this.id = id;
-    this.title = title; 
-    this.author = author; 
-    this.pages = pages; 
-    this.pagesRead = pagesRead; 
-    this.read = read;
-    
-    this.isRead = () => (this.pages == this.pagesRead);
+    this._id = id;
+    this._title = title;
+    this._author = author;
+    this._pages = pages;
+    this._pagesRead = pagesRead;
+    this._read = read;
 }
+
+Object.defineProperty(Book.prototype, 'id', {
+    get: function() {
+        return this._id;
+    },
+    set: function(value) {
+        this._id = value;
+    }
+});
+Object.defineProperty(Book.prototype, 'title', {
+    get: function() {
+        return this._title;
+    },
+    set: function(title) {
+        this.title = title;
+        document.querySelector(`#card-${this.id} .title`).textContent = title;
+    }
+})
+Object.defineProperty(Book.prototype, 'author', {
+    get: function() {
+        return this._author;
+    },
+    set: function(author) {
+        this.author = author;
+        document.querySelector(`#card-${this.id} .author`).textContent = author;
+    }
+})
+Object.defineProperty(Book.prototype, 'pages', {
+    get: function(){
+        return this._pages;
+    },
+    set: function(pages){
+        this.pages = pages;
+        document.querySelector(`#card-${this.id} .total-pages`).textContent = pages;
+        document.querySelector(`#card-${this.id} input`).max = pages;
+
+        if (this.read){
+            this.setPagesRead(pages);
+        }
+    }
+})
+Object.defineProperty(Book.prototype, 'pagesRead', {
+    get: function(){
+        return this._pages;
+    },
+    set: function(pagesRead){
+        this._pagesRead = pagesRead;
+        document.querySelector(`#card-${this.id} .pages-read`).textContent = pagesRead;
+        document.querySelector(`#card-${this.id} input`).value = pagesRead;
+    }
+})
+Object.defineProperty(Book.prototype, 'read', {
+    get: function() {
+        return this._read;
+    },
+    set: function(isRead) {
+        if (isRead) {
+            document.querySelector(`#card-${this.id} .card-buttons`).firstElementChild.classList.remove("button-incomplete");
+            document.querySelector(`#card-${this.id} .card-buttons`).firstElementChild.textContent = "read";
+            document.querySelector(`#card-${this.id} input`).disabled = true;
+        }
+        else {
+            console.log(this.id);
+            console.log(document.querySelector(`#card-${this.id} .card-buttons`).firstElementChild);
+            document.querySelector(`#card-${this.id} .card-buttons`).firstElementChild.classList.add("button-incomplete");
+            document.querySelector(`#card-${this.id} .card-buttons`).firstElementChild.textContent = "incomplete";
+            document.querySelector(`#card-${this.id} input`).disabled = false;
+        }
+        this._read = isRead;
+    }
+});
 
 function addBookToLibrary() {
     let newId = 0;
@@ -59,21 +128,19 @@ function addCardToPage(bookId){
     let newBook = getBookById(bookId);
     let newCard = contentTemplate.content.cloneNode(true);
 
-    console.log(newBook);
-
     newCard.querySelector(".card").id = `card-${newBook.id}`;
+    newCard.querySelector("input").id = `input-${newBook.id}`;
+    newCard.querySelectorAll("button").forEach(button => {
+        button.setAttribute("data-id", newBook.id);
+    })
+
     newCard.querySelector(".title").textContent = newBook.title;
     newCard.querySelector(".author").textContent = newBook.author;
     newCard.querySelector(".total-pages").textContent = newBook.pages;
     newCard.querySelector(".pages-read").textContent = newBook.pagesRead;
     
-    newCard.querySelector("input").id = `input-${newBook.id}`;
     newCard.querySelector("input").value = newBook.pagesRead;
     newCard.querySelector("input").max = newBook.pages;
-    
-    newCard.querySelectorAll("button").forEach(button => {
-        button.setAttribute("data-id", newBook.id);
-    }) 
 
     if (newBook.read) {
         newCard.querySelector(".card").classList.add("read");
