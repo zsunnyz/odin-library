@@ -24,12 +24,12 @@ let isNumber = num => {return /^\d+$/.test(num);}
 let currLibrary = [];
 
 function Book(id, title, author, pages, pagesRead, read) {
-    this._id = id;
-    this._title = title;
-    this._author = author;
-    this._pages = pages;
-    this._pagesRead = pagesRead;
-    this._read = read;
+    this.id = id;
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.pagesRead = pagesRead;
+    this.read = read;
 }
 
 Object.defineProperty(Book.prototype, 'id', {
@@ -45,7 +45,7 @@ Object.defineProperty(Book.prototype, 'title', {
         return this._title;
     },
     set: function(title) {
-        this.title = title;
+        this._title = title;
         document.querySelector(`#card-${this.id} .title`).textContent = title;
     }
 })
@@ -54,7 +54,7 @@ Object.defineProperty(Book.prototype, 'author', {
         return this._author;
     },
     set: function(author) {
-        this.author = author;
+        this._author = author;
         document.querySelector(`#card-${this.id} .author`).textContent = author;
     }
 })
@@ -63,7 +63,7 @@ Object.defineProperty(Book.prototype, 'pages', {
         return this._pages;
     },
     set: function(pages){
-        this.pages = pages;
+        this._pages = pages;
         document.querySelector(`#card-${this.id} .total-pages`).textContent = pages;
         document.querySelector(`#card-${this.id} input`).max = pages;
 
@@ -91,12 +91,12 @@ Object.defineProperty(Book.prototype, 'read', {
             document.querySelector(`#card-${this.id} .card-buttons`).firstElementChild.classList.remove("button-incomplete");
             document.querySelector(`#card-${this.id} .card-buttons`).firstElementChild.textContent = "read";
             document.querySelector(`#card-${this.id} input`).disabled = true;
+            document.querySelector(`#card-${this.id}`).classList.add("read");
         }
         else {
-            console.log(this.id);
-            console.log(document.querySelector(`#card-${this.id} .card-buttons`).firstElementChild);
             document.querySelector(`#card-${this.id} .card-buttons`).firstElementChild.classList.add("button-incomplete");
             document.querySelector(`#card-${this.id} .card-buttons`).firstElementChild.textContent = "incomplete";
+            document.querySelector(`#card-${this.id}`).classList.remove("read");
             document.querySelector(`#card-${this.id} input`).disabled = false;
         }
         this._read = isRead;
@@ -105,11 +105,20 @@ Object.defineProperty(Book.prototype, 'read', {
 
 function addBookToLibrary() {
     let newId = 0;
+    let newCard = contentTemplate.content.cloneNode(true);
     if (currLibrary.length > 0) {
         newId = currLibrary[currLibrary.length - 1].id + 1;
     }
+
+    newCard.querySelector(".card").id = `card-${newId}`;
+    newCard.querySelector("input").id = `input-${newId}`;
+    newCard.querySelectorAll("button").forEach(button => {
+        button.setAttribute("data-id", newId);
+    })
+    contentContainer.appendChild(newCard);
+
     currLibrary.push(new Book(newId, titleInput.value, authorInput.value, totalPagesInput.value, pagesReadInput.value, (totalPagesInput.value == pagesReadInput.value)));
-    addCardToPage(newId);
+
 }
 
 function getBookById(bookId) {
@@ -121,35 +130,6 @@ function getBookById(bookId) {
 
     console.log(`No book with ID ${bookId} found!`);
     return NaN;
-}
-
-function addCardToPage(bookId){
-
-    let newBook = getBookById(bookId);
-    let newCard = contentTemplate.content.cloneNode(true);
-
-    newCard.querySelector(".card").id = `card-${newBook.id}`;
-    newCard.querySelector("input").id = `input-${newBook.id}`;
-    newCard.querySelectorAll("button").forEach(button => {
-        button.setAttribute("data-id", newBook.id);
-    })
-
-    newCard.querySelector(".title").textContent = newBook.title;
-    newCard.querySelector(".author").textContent = newBook.author;
-    newCard.querySelector(".total-pages").textContent = newBook.pages;
-    newCard.querySelector(".pages-read").textContent = newBook.pagesRead;
-    
-    newCard.querySelector("input").value = newBook.pagesRead;
-    newCard.querySelector("input").max = newBook.pages;
-
-    if (newBook.read) {
-        newCard.querySelector(".card").classList.add("read");
-    }
-    else {
-        newCard.querySelector(".card").classList.add("unfinished");
-    }
-        
-    contentContainer.appendChild(newCard);
 }
 
 function resetModal() {
