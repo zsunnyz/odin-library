@@ -1,5 +1,6 @@
 <html lang="en">
-<head>
+<teElement("h2")
+head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -39,18 +40,20 @@
             <h2>Welcome to your personal library!</h2>
             <h3>Press the plus button at the bottom of your screen to get started</h3>
         </div>
-        <div class="card read">
-            <h2 class="title">Harry Potter and the Order of the Phoenix</h2>
-            <p>Author: <span class="author">J.K. Rowling</span></p>
-            <p>No. Pages: <span class="total-pages">799</span></p>
-            <input type="range">
-            <p>Pages read: <span class="pages-read">466</span></p>
-            <div class="card-buttons">
-                <button type="button">complete</button>
-                <button type="button">edit</button>
-                <button type="button">delete</button>
+        <template id="card-template">
+            <div class="card">
+                <h2 class="title">Harry Potter and the Order of the Phoenix</h2>
+                <p>Author: <span class="author">J.K. Rowling</span></p>
+                <p>No. Pages: <span class="total-pages">799</span></p>
+                <input type="range" step="1" min="0">
+                <p>Pages read: <span class="pages-read">466</span></p>
+                <div class="card-buttons">
+                    <button type="button" data-id="1">complete</button>
+                    <button type="button" data-id="1">edit</button>
+                    <button type="button" data-id="1">delete</button>
+                </div>
             </div>
-        </div>
+        </template>
     </div>
     <div class ="modal noshow"> 
         <div class="modal-content">

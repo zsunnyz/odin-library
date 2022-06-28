@@ -32,7 +32,7 @@ body {
     justify-content: center;
     background-color: var(--primary);
     text-align: center;
-    width: 100%;
+    width: 100vw;
     height: 70px;
     padding: 10px 0 10px 0;
 }
@@ -341,8 +341,9 @@ input[type="range"]::-moz-range-thumb {
 #new-book{
     z-index: 1;
     position: fixed;
-    box-sizing: border-box;
     bottom: 40px;
+    left: 50%;
+    margin-left: -45px;
 
     display: flex;
     align-items: center;
