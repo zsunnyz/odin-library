@@ -164,6 +164,10 @@ function addBookToLibrary() {
         pagesReadInput.value = newBook.pagesRead;
         currEditingBook = newBook;
     })
+    cardButtons[2].addEventListener("click", () => {
+        document.querySelector(`#card-${newBook.id}`).remove();
+        currLibrary.splice(currLibrary.indexOf(newBook), 1);
+    })
 
 }
 
