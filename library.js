@@ -22,6 +22,7 @@ let isNumber = num => {return /^\d+$/.test(num);}
 
 /* Library Objects */
 let currLibrary = [];
+let currEditingBook = 0;
 
 function Book(id, title, author, pages, pagesRead, read) {
     this.id = id;
@@ -29,6 +30,7 @@ function Book(id, title, author, pages, pagesRead, read) {
     this.author = author;
     this.pages = pages;
     this.pagesRead = pagesRead;
+    this.previousPage = -1;
     this.read = read;
 }
 
@@ -68,18 +70,26 @@ Object.defineProperty(Book.prototype, 'pages', {
         document.querySelector(`#card-${this.id} input`).max = pages;
 
         if (this.read){
-            this.setPagesRead(pages);
+            this.pagesRead = this.pages;
         }
     }
 })
 Object.defineProperty(Book.prototype, 'pagesRead', {
     get: function(){
-        return this._pages;
+        return this._pagesRead;
     },
     set: function(pagesRead){
         this._pagesRead = pagesRead;
         document.querySelector(`#card-${this.id} .pages-read`).textContent = pagesRead;
         document.querySelector(`#card-${this.id} input`).value = pagesRead;
+
+        if (this.pagesRead == this.pages) {
+            this._read = true;
+            document.querySelector(`#card-${this.id} .card-buttons`).firstElementChild.classList.remove("button-incomplete");
+            document.querySelector(`#card-${this.id} .card-buttons`).firstElementChild.textContent = "read";
+            document.querySelector(`#card-${this.id} input`).disabled = true;
+            document.querySelector(`#card-${this.id}`).classList.add("read");
+        }
     }
 })
 Object.defineProperty(Book.prototype, 'read', {
@@ -87,17 +97,23 @@ Object.defineProperty(Book.prototype, 'read', {
         return this._read;
     },
     set: function(isRead) {
-        if (isRead) {
+        if (isRead && this.read != true) {
             document.querySelector(`#card-${this.id} .card-buttons`).firstElementChild.classList.remove("button-incomplete");
             document.querySelector(`#card-${this.id} .card-buttons`).firstElementChild.textContent = "read";
             document.querySelector(`#card-${this.id} input`).disabled = true;
             document.querySelector(`#card-${this.id}`).classList.add("read");
+
+            this.pagesRead = this.pages;
         }
-        else {
+        else if (!isRead) {
             document.querySelector(`#card-${this.id} .card-buttons`).firstElementChild.classList.add("button-incomplete");
             document.querySelector(`#card-${this.id} .card-buttons`).firstElementChild.textContent = "incomplete";
             document.querySelector(`#card-${this.id}`).classList.remove("read");
             document.querySelector(`#card-${this.id} input`).disabled = false;
+
+            if (this.previousPage != -1) {
+                this.pagesRead = this.previousPage;
+            }
         }
         this._read = isRead;
     }
@@ -117,7 +133,37 @@ function addBookToLibrary() {
     })
     contentContainer.appendChild(newCard);
 
-    currLibrary.push(new Book(newId, titleInput.value, authorInput.value, totalPagesInput.value, pagesReadInput.value, (totalPagesInput.value == pagesReadInput.value)));
+    let newBook = new Book(newId, titleInput.value, authorInput.value, totalPagesInput.value, pagesReadInput.value, (totalPagesInput.value == pagesReadInput.value));
+    currLibrary.push(newBook);
+
+    // onChange and onInput event listeners to prevent the range input from snapping to max pages
+    document.querySelector(`#card-${newId} input`).addEventListener("input", e => {
+        document.querySelector(`#card-${newId} .pages-read`).textContent = e.target.value;
+    })
+    document.querySelector(`#card-${newId} input`).addEventListener("change", e => {
+        if(e.target.value != newBook.pages) {
+            newBook.previousPage = newBook.pagesRead;
+        }
+        newBook.pagesRead = e.target.value;
+    })
+
+    let cardButtons = document.querySelectorAll(`#card-${newId} .card-buttons button`);
+    cardButtons[0].addEventListener("click", () => {
+        if (!newBook.read) {
+            newBook.previousPage = newBook.pagesRead;
+        }
+        newBook.read = !newBook.read
+    })
+    cardButtons[1].addEventListener("click", () => {
+        currInputPage = 0;
+        plusSVG.classList.toggle("plus-close");
+        toggleBookEdit();
+        titleInput.value = newBook.title;
+        authorInput.value = newBook.author;
+        totalPagesInput.value = newBook.pages;
+        pagesReadInput.value = newBook.pagesRead;
+        currEditingBook = newBook;
+    })
 
 }
 
@@ -200,12 +246,11 @@ authorInput.addEventListener("keydown", () => {
         if (pagesReadInput.readOnly) {
             pagesReadInput.value = totalPagesInput.value;
         }
-        
+
         pageTotalSmall = document.getElementById("page-total-small-e");
         pageTotalAlpha = document.getElementById("page-total-alpha-e");
-        
+
         if (!isNumber(totalPagesInput.value) && totalPagesInput.value != ""){
-            console.log("here");
             pageTotalSmall.classList.add("noshow");
             pageTotalAlpha.classList.remove("noshow");
             allInputsValid["total-pages"] = false;
@@ -262,9 +307,22 @@ modalCompleted.addEventListener("click", () => {
 });
 
 modalSubmit.addEventListener("click", () => {
-    if (document.querySelector(".modal-content > h2").value == "Add New Book" && areInputsValid()) {
-        addBookToLibrary();
-        resetModal();
+    if (areInputsValid()) {
+        if (document.querySelector(".modal-content > h2").textContent == "Add New Book") {
+            addBookToLibrary();
+            resetModal();
+        }
+        else if (document.querySelector(".modal-content > h2").textContent == "Edit Book") {
+            currEditingBook.title = titleInput.value;
+            currEditingBook.author = authorInput.value;
+            currEditingBook.pages = totalPagesInput.value;
+            currEditingBook.pagesRead = pagesReadInput.value;
+            currEditingBook.read = (totalPagesInput.value == pagesReadInput.value);
+            currInputPage = 0;
+            plusSVG.classList.toggle("plus-close");
+            modal.classList.toggle("noshow");
+            resetModal();
+        }
     }
 })
 
@@ -272,7 +330,7 @@ function isModalOpen(){
     return modal.classList("noshow");
 }
 
-// Open modal button functions 
+// Open modal button functions
 addBtn.addEventListener("click", () => {
     currInputPage = 0;
     plusSVG.classList.toggle("plus-close");
@@ -280,12 +338,12 @@ addBtn.addEventListener("click", () => {
 })
 
 function toggleBookAdd() {
-    document.querySelector(".modal-content > h2").value = "Add New Book";
+    document.querySelector(".modal-content > h2").textContent = "Add New Book";
     modal.classList.toggle("noshow");
 }
 
 function toggleBookEdit() {
-    document.querySelector(".modal-content > h2").value = "Edit Book";
+    document.querySelector(".modal-content > h2").textContent = "Edit Book";
     modal.classList.toggle("noshow");
 }
 
